@@ -77,7 +77,9 @@ La arquitectura hexagonal se basa en el principio de la inversión de dependenci
 
     **Adaptadores**: En esta capa se adaptan los componentes de infraestructura a las interfaces definidas en la capa de aplicación. Aquí encontrarás el mapeo entre las entidades de la base de datos y las entidades del dominio.
 
-## Estructura del Proyecto
+## Base de datos
+Se cuenta con una base de datos H2 embeded en memoria, la cual cuenta con archivos de creacion de tabla PRICE y la inicializacion de los datos de ejemplo.
+Archivos `schema.sql` y `data.sql`
 
 
 
@@ -88,6 +90,24 @@ La aplicación incluye pruebas unitarias y de integración para garantizar la ca
 - Pruebas Unitarias: Se centran en probar componentes individuales de la aplicación.
 - Pruebas de Integración: Verifican la interacción entre las diferentes capas de la aplicación. Estas las podra ejecutar en el modulo de `infrastruture`
 
+## API
+  Una vez ejecutada la aplicacion podras hacer pruebas en el endpoint `http://localhost:8080/price/`
+  Incluyendo los QueryParams `startDate, productId, brandId`
+  #Ejemplo GetRequest
+  En postman http://localhost:8080/price?startDate=2020-06-14-19.00.00&productId=35455&brandId=1
+  #Response
+  ```
+{
+    "productId": 35455,
+    "brandId": 1,
+    "applicableRateCode": 1,
+    "startDate": "2020-06-14T00:00:00",
+    "endDate": "2020-12-31T23:59:59",
+    "price": 35.5
+}
+
+```
+
 ## Ejecución
 
 Para ejecutar la aplicación, puedes usar Spring Boot. La configuración de la base de datos en el archivo `application.yml` y ejecuta la aplicación con:
@@ -95,3 +115,121 @@ Para ejecutar la aplicación, puedes usar Spring Boot. La configuración de la b
 ```bash
 mvn clean install ->> 
 mvn run 
+```
+##Estructura de carpetas
+```bash
+.
+├── README.md
+├── application
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   └── java
+│       │       └── com
+│       │           └── edwindev08
+│       │               └── price
+│       │                   ├── mapper
+│       │                   │   └── PriceDtoMapper.java
+│       │                   └── query
+│       │                       └── PriceByIdsAndDateHandler.java
+│       └── test
+│           └── java
+│               └── com
+│                   └── edwindev08
+│                       └── price
+│                           ├── builders
+│                           │   ├── ChildObjectBuilder.java
+│                           │   └── PriceAppBuilder.java
+│                           ├── mapper
+│                           └── query
+│                               └── PriceByIdsAndDateHandlerTest.java
+├── domain
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   └── java
+│       │       └── com
+│       │           └── edwindev08
+│       │               └── price
+│       │                   ├── model
+│       │                   │   ├── dto
+│       │                   │   │   └── PriceDto.java
+│       │                   │   ├── entity
+│       │                   │   │   └── Price.java
+│       │                   │   └── exception
+│       │                   │       └── PriceNotFoundException.java
+│       │                   ├── port
+│       │                   │   ├── dao
+│       │                   │   │   └── PriceDao.java
+│       │                   │   └── repository
+│       │                   │       └── PriceRepositoryPort.java
+│       │                   └── service
+│       │                       └── PriceByPriorityService.java
+│       └── test
+│           └── java
+│               └── com
+│                   └── edwindev08
+│                       └── price
+│                           ├── builders
+│                           │   ├── ChildObjectBuilder.java
+│                           │   └── PriceDomainBuilder.java
+│                           ├── dao
+│                           ├── model
+│                           │   └── entity
+│                           │       └── PriceTest.java
+│                           └── service
+│                               └── PriceByPriorityServiceTest.java
+├── infrastructure
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── edwindev08
+│       │   │           └── price
+│       │   │               ├── PriceQueryServiceApplication.java
+│       │   │               ├── adapter
+│       │   │               │   ├── entity
+│       │   │               │   │   ├── ApiError.java
+│       │   │               │   │   └── PriceEntity.java
+│       │   │               │   ├── jpa
+│       │   │               │   │   ├── dao
+│       │   │               │   │   │   └── PriceH2Dao.java
+│       │   │               │   │   └── repository
+│       │   │               │   │       └── PriceJpaAdapterRepository.java
+│       │   │               │   └── mapper
+│       │   │               │       └── PriceDboMapper.java
+│       │   │               ├── config
+│       │   │               │   └── PriceBeans.java
+│       │   │               └── rest
+│       │   │                   ├── adviser
+│       │   │                   │   └── ExceptionControllerAdvice.java
+│       │   │                   └── controller
+│       │   │                       └── PriceQueryController.java
+│       │   └── resources
+│       │       ├── application.yml
+│       │       └── db
+│       │           ├── data.sql
+│       │           └── schema.sql
+│       └── test
+│           └── java
+│               └── com
+│                   └── edwindev08
+│                       └── price
+│                           ├── adapter
+│                           │   ├── entity
+│                           │   ├── jpa
+│                           │   │   ├── dao
+│                           │   │   └── repository
+│                           │   └── mapper
+│                           │       └── PriceDboMapperTest.java
+│                           ├── builders
+│                           │   ├── ChildObjectBuilder.java
+│                           │   └── PriceDboBuilder.java
+│                           ├── integrationTest
+│                           │   └── PriceQueryControllerTest.java
+│                           └── rest
+│                               └── controller
+│                                   └── PriceQueryControllerTest.java
+└── pom.xml
+```
