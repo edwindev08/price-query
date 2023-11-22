@@ -28,5 +28,4 @@ server:
   servlet:
     session:
       timeout: 21600s
-#    context-path: /api/v1
 
