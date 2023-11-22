@@ -103,4 +103,38 @@ public class PriceDboBuilder {
                 childObject.buildCurrency()
         );
     }
+
+    public static PriceEntity buildEntity() {
+        var childObject = new ChildObjectBuilder();
+        return new PriceEntity(
+                childObject.buildBrandId(),
+                childObject.buildStartDate(),
+                childObject.buildEndDate(),
+                childObject.buildApplicableRateCode(),
+                childObject.buildProduct(),
+                childObject.buildPriority(),
+                childObject.buildFinalPrice(),
+                childObject.buildCurrency()
+        );
+    }
+
+    public static PriceEntity buildEntityCase1() {
+
+        var startDate = LocalDateTime.of(LocalDate.of(2020, 6,14),
+                LocalTime.of(15, 0, 0));
+        var endDate = LocalDateTime.of(LocalDate.of(2020, 6,14),
+                LocalTime.of(18, 30, 0));
+
+        var childObject = new ChildObjectBuilder();
+        return new PriceEntity(
+                childObject.buildBrandId(),
+                startDate,
+                endDate,
+                childObject.buildApplicableRateCode(),
+                childObject.buildProduct(),
+                childObject.buildPriority(),
+                25.45,
+                childObject.buildCurrency()
+        );
+    }
 }
