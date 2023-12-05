@@ -21,16 +21,7 @@ public class PriceByPriorityService {
     public List<Price> getPricesByPriority(
             LocalDateTime startDate, Long productId, Long brandId) {
 
-        return priceDao.getPricesByStartDateProductIdAndBrandId(startDate, productId, brandId)
-                .stream()
-                .filter(price -> price.getStartDate().isBefore(startDate) &&
-                        price.getEndDate().isAfter(startDate))
-                .collect(Collectors.groupingBy(Price::getPriority))
-                .entrySet()
-                .stream()
-                .max(Comparator.comparingInt(Map.Entry::getKey))
-                .map(Map.Entry::getValue)
-                .orElseThrow(PriceNotFoundException::new);
+        return priceDao.getPricesByStartDateProductIdAndBrandId(startDate, productId, brandId);
 
     }
 }
