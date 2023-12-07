@@ -216,10 +216,13 @@ mvn run
 │               └── com
 │                   └── edwindev08
 │                       └── price
+│                           ├── SharedTest.java
 │                           ├── adapter
 │                           │   ├── entity
+│                           │   │   └── PriceEntityTest.java
 │                           │   ├── jpa
 │                           │   │   ├── dao
+│                           │   │   │   └── PriceH2DaoTest.java
 │                           │   │   └── repository
 │                           │   └── mapper
 │                           │       └── PriceDboMapperTest.java
@@ -232,4 +235,5 @@ mvn run
 │                               └── controller
 │                                   └── PriceQueryControllerTest.java
 └── pom.xml
+
 ```

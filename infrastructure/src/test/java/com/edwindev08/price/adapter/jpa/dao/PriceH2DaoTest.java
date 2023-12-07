@@ -44,7 +44,7 @@ class PriceH2DaoTest {
     void testGetPricesByStartDateProductIdAndBrandId() {
         Price priceDomain = PriceDboBuilder.buildDomain();
         when(priceJpaAdapterRepository
-                .findByStartDateLessThanEqualAndProductIdAndBrandId(startDate, productId, brandId))
+                .findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndProductIdAndBrandIdOrderByPriorityDesc(startDate, startDate, productId, brandId))
                 .thenReturn(priceEntity);
         when(priceDboMapper.toDomain(priceEntity.get(0))).thenReturn(priceDomain);
 

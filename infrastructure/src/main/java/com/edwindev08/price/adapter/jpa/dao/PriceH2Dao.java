@@ -24,8 +24,8 @@ public class PriceH2Dao implements PriceDao {
     public List<Price> getPricesByStartDateProductIdAndBrandId(
             LocalDateTime startDate, Long productId, Long brandId)
     {
-        return priceJpaAdapterRepository.findByStartDateLessThanEqualAndProductIdAndBrandId(
-                startDate, productId, brandId)
+        return priceJpaAdapterRepository.findByStartDateLessThanEqualAndEndDateGreaterThanEqualAndProductIdAndBrandIdOrderByPriorityDesc(
+                startDate, startDate, productId, brandId)
                 .stream()
                 .map(priceDboMapper::toDomain)
                 .toList();

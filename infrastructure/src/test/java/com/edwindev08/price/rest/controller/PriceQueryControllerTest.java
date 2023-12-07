@@ -4,7 +4,6 @@ import com.edwindev08.price.builders.PriceDboBuilder;
 import com.edwindev08.price.model.dto.PriceDto;
 import com.edwindev08.price.model.exception.PriceNotFoundException;
 import com.edwindev08.price.query.PriceByIdsAndDateHandler;
-import com.edwindev08.price.rest.controller.PriceQueryController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
